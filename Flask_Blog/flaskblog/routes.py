@@ -4,6 +4,7 @@ from flaskblog import app ,db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from flaskblog.models import User,Post
 from flask_login import login_user, current_user, logout_user, login_required
+
 posts = [
     {
         'author': 'Corey Schafer',
@@ -72,8 +73,8 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.data.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.route_path, 'static/profile_pics', picture_fn)
-    form_picture.save(picture_path)
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    form_picture.data.save(picture_path)
     return picture_fn
 
 @app.route("/account", methods=['GET', 'POST'])
